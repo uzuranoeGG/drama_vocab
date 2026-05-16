@@ -26,52 +26,58 @@ function renderCards() {
   if (!cards.length) {
 
     el.innerHTML = `
-    <div class="card">
-      まだ単語がありません
-    </div>`;
+      <div class="card">
+        まだ単語がありません
+      </div>
+    `;
 
     return;
   }
 
   el.innerHTML = cards.map((c, i) => `
 
-  <div class="word-item">
+    <div class="word-item">
 
-    <div class="word-top">
+      <div class="word-top">
 
-      <input
-        type="checkbox"
-        ${c.checked ? 'checked' : ''}
-        onclick="toggleCheck(${i})">
+        <input
+          type="checkbox"
+          ${c.checked ? 'checked' : ''}
+          onclick="toggleCheck(${i})">
 
-      <div class="word-en">${c.word}</div>
+        <div class="word-en">
+          ${c.word}
+        </div>
+
+      </div>
+
+      <div class="small">
+        ${c.definition}
+      </div>
+
+      <div class="example">
+        ${c.example}
+      </div>
+
+      ${c.memo ? `
+        <div class="small" style="margin-top:10px">
+          📝 ${c.memo}
+        </div>
+      ` : ''}
+
+      <button
+        class="audio-btn"
+        onclick="playAudio('${c.audio}')">
+        発音
+      </button>
+
+      <button
+        class="delete-btn"
+        onclick="deleteCard(${i})">
+        削除
+      </button>
 
     </div>
-
-    <div class="small">${c.definition}</div>
-
-    <div class="example">
-      ${c.example}
-    </div>
-
-    ${c.memo ? `
-    <div class="small" style="margin-top:10px">
-      📝 ${c.memo}
-    </div>` : ''}
-
-    <button
-      class="audio-btn"
-      onclick="playAudio('${c.audio}')">
-      発音
-    </button>
-
-    <button
-      class="delete-btn"
-      onclick="deleteCard(${i})">
-      削除
-    </button>
-
-  </div>
 
   `).join('');
 }
